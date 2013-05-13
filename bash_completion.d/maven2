@@ -1,0 +1,158 @@
+_mvn() 
+{
+	local cur prev opts
+	COMP_WORDBREAKS=${COMP_WORDBREAKS//:}
+	COMPREPLY=()
+	cur="${COMP_WORDS[COMP_CWORD]}"
+	prev="${COMP_WORDS[COMP_CWORD-1]}"
+	
+	# phases for the default lifecycle
+	default_phases="validate 
+               initialize 
+               generate-sources 
+               process-sources 
+               generate-resources 
+               process-resources 
+               compile 
+	           dependency:tree
+	           eclipse:eclipse
+	           eclipse:clean
+               process-classes 
+               generate-test-sources 
+               process-test-sources 
+               generate-test-resources 
+               process-test-resources 
+               test-compile 
+               process-test-classes 
+               test 
+               package 
+               pre-integration-test 
+               integration-test 
+               post-integration-test 
+               verify 
+               install 
+               deploy 
+               qunit:test
+               qunit:serve
+               jshint:lint
+               cj:build 
+               cj:build-dependents 
+               cj:build-dependencies 
+               cj:build-stale 
+               cj:build-stale-dependents 
+               cj:build-stale-dependencies 
+               cj:build-changes 
+               cj:build-change-dependents 
+               cj:sync-build 
+               cj:sync-build-dependents 
+               cj:copy-jars"
+
+	# phases for the clean lifecycle
+	clean_phases="pre-clean
+		clean
+		post-clean"
+
+	# phases for the site lifecycle
+	site_phases="pre-site
+		site
+		post-site
+		site-deploy"
+
+	flags="-Dtest=
+		-Dit.test=
+        -Djstd.tests=
+		-DfailIfNoTests=false 
+        -DskipTests=true 
+		-Dmaven.test.skip=true 
+		-Dcleanup.skip=true 
+		-Ddelta.skip=true 
+	    -DdownloadSources=true 
+	    -DdownloadJavadocs=true 
+		-Declipse.workspace=$HOME/workspaces/main 
+        -DconfigurationReport=true 
+        -Dfolders=
+        -Dadd.folders=
+        -Dgoals=
+        -Dp4.options 
+        -DredoNoSync 
+        -DincludePrevious 
+		-Dpartition.port.prefix=
+        -DprintOnly 
+        -Duser.name=proberts
+        -Dqunit.filter=
+        -Dqunit.filter=regex:
+        -Dqunit.numThreads=
+        -Dqunit.runner=phantomjs
+        -Dqunit.runner=htmlunit
+        -Dselenium.server=one
+        -Dselenium.server.port=4446
+		-Put 
+		-Pft 
+		-Pit 
+		-PclearLibs 
+		-Peclipse-bling"
+
+	currdir="$(basename $PWD)"
+	parentdir="$(basename `dirname $PWD`)"
+        echo $PWD | egrep -q '/cjo/[0-9]{4}.deployments/cjo[0-9]{4}.[0-9]{2}'
+	
+	if [ $? -eq 0 ]; then
+           flags+=" -Declipse.projectNameTemplate=${currdir}-[artifactId]"
+           flags+=" -Dp4.view=//cj/cjo/${parentdir}/${currdir}/..."
+        elif [[ ${currdir} == 'main' ]]; then
+           flags+=" -Dp4.view=//cj/cjo/main/..."
+        fi
+
+	opts="-f
+	    --file
+		--debug
+		--batch-mode
+		--lax-checksums
+		--strict-checksums
+		--check-plugin-updates
+		--define
+		--errors
+		--fail-at-end
+		--fail-fast
+		--fail-never
+		--help
+		--non-recursive
+		--no-plugin-registry
+		--no-plugin-updates
+		--offline
+		--activate-profiles
+		--quiet
+		--reactor
+		--settings
+		--update-snapshots
+		--update-plugins
+		--version
+		${flags}
+		${default_phases}
+		${clean_phases}
+		${site_phases}"
+
+	if [[ ${cur} == -* ]] ; then
+		COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+		return 0
+	fi
+
+	case "${prev}" in
+		"--file"|"-f")
+			local pom_files=$(for x in `find -maxdepth 2 -type f -name pom.xml` ; do echo ${x}|cut -c 3- ; done)
+			COMPREPLY=( $(compgen -W "${pom_files}" -- ${cur} ))
+			#_filedir xml
+			return 0
+			;;
+		${default_phases})
+			;;
+		*)
+			;;
+	esac
+
+	COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+	return 0
+}
+
+#complete -F _mvn $filenames mvn m2
+complete -o nospace -F _mvn mvn m2

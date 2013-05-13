@@ -1,0 +1,16 @@
+[core]
+	excludesfile = /home/proberts/.gitignore
+[user]
+    name = Paul Roberts
+    email = proberts@cj.com
+[diff]
+    external = /home/proberts/src/software/bin/meldGit
+	tool = gvimdiff
+[color]
+	ui = auto
+[format]
+    pretty = format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
+[merge]
+	tool = gvimdiff
+[push]
+	default = simple

@@ -1,0 +1,26 @@
+function _sqlplus () {
+   local cur prev
+   COMPREPLY=()
+   cur="${COMP_WORDS[COMP_CWORD]}"
+
+   case "${cur}" in
+      *@*)
+         local newcur=$( echo ${cur} | awk -v FS="@" '{ print $2 }' )
+         local newprev=$( echo ${cur} | awk -v FS="@" '{ print $1 "@" }' )
+         COMPREPLY=( $(compgen -P "${newprev}" -W "${TNSDBS}" -- `echo ${newcur} | tr "[:lower:]" "[:upper:]"`) )
+         ;;
+      */*)
+         local newcur=$( echo ${cur} | awk -v FS="/" '{ print $2 }' )
+         local newprev=$( echo ${cur} | awk -v FS="/" '{ print $1 "/" }' )
+         COMPREPLY=( $(compgen -P "${newprev}" -W "${TNSPWDS}" -- ${newcur}) )
+	 ;;
+      *)
+         COMPREPLY=( $(compgen -W "${TNSUSERS}" -- ${cur}) )
+	 ;;
+   esac
+}
+
+complete -o nospace -F _sqlplus sqlplus
+
+#complete -W "database dw domain cjo-services flex cjx ap backend" "./build.sh"
+#complete -W "run-app -Dgrails.env= -Dqa.env= dependency-report" "grails"
