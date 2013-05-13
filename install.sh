@@ -18,7 +18,8 @@ cd $dir
 # create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
 for file in $files; do
     echo "Creating symlink to $file in home directory."
-    ln -fs $dir/$file ~/.$file
+    rm -f ~/.$file
+    ln -s $dir/$file ~/.$file
 done
 
 echo "Creating symlink to .gitignore in home directory."
