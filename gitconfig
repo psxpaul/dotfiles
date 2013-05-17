@@ -14,3 +14,7 @@
 	tool = gvimdiff
 [push]
 	default = simple
+[branch]
+	autosetuprebase = always
+[branch "master"]
+	rebase = true
