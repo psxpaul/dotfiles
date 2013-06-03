@@ -1,9 +1,0 @@
-function _gitp4 () {
-   local cur opts
-   cur="${COMP_WORDS[COMP_CWORD]}"
-   opts="clone rollback debug commit rebase branches sync submit"
-
-   COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
-}
-
-complete -o nospace -F _gitp4 git-p4

@@ -4,7 +4,7 @@
     name = Paul Roberts
     email = proberts@cj.com
 [diff]
-    external = /home/proberts/src/software/bin/meldGit
+    external = /home/proberts/bin/meldGit
 	tool = gvimdiff
 [color]
 	ui = auto
@@ -14,7 +14,3 @@
 	tool = gvimdiff
 [push]
 	default = simple
-[branch]
-	autosetuprebase = always
-[branch "master"]
-	rebase = true

@@ -1,4 +1,7 @@
 *~
+*.iml
+*.ipr
+*.iws
 *.tmp
 *.swp
 *.swo
