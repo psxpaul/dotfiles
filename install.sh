@@ -27,4 +27,8 @@ ln -fs $dir/.gitignore ~/.gitignore
 echo "Creating symlink to .gitmodules in home directory."
 ln -fs $dir/.gitmodules ~/.gitmodules
 
+echo "Creating symlink to meldGit in ~/bin"
+mkdir -p ~/bin
+ln -fs $dir/meldGit ~/bin/meldGit
+
 echo "Done!"
