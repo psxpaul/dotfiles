@@ -73,7 +73,7 @@ set wildignore=*/tmp/*,*.so,*.class,*.swp,*.zip,*.pdf,*.o,*/target/*
 let g:ctrlp_by_filename = 0
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_regexp = 1
-let g:ctrlp_root_markers = ['pom.xml']
+let g:ctrlp_root_markers = ['pom.xml', 'Gruntfile.js', 'package.json']
 
 set laststatus=2
 set statusline=%F%m%r%h%w\ %=%<%1.30{getcwd()}\ [line\ %l\/%L\ \|\ col\ %v]
