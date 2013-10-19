@@ -15,6 +15,10 @@ files="bashrc bash_aliases bash_completion.d profile inputrc gitconfig gvimrc vi
 echo -n "Changing to the $dir directory ..."
 cd $dir
 
+# get the latest submodules
+git submodule init
+git submodule update
+
 # create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
 for file in $files; do
     echo "Creating symlink to $file in home directory."
