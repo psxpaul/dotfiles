@@ -11,6 +11,7 @@ set tags=~/.tags
 set complete=.,w,b,u,t,i
 set wildmode=longest:full,list
 set wildmenu
+set backspace=indent,eol,start
 
 set ignorecase
 set smartcase
