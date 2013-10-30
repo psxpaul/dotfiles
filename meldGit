@@ -1,3 +1,10 @@
 #!/bin/bash
 
-/usr/bin/meld $2 $5
+MELD_PATH=/usr/bin/meld
+
+if [ -e $HOME/bin/meld ]
+then
+    MELD_PATH=$HOME/bin/meld
+fi
+
+$MELD_PATH $2 $5
