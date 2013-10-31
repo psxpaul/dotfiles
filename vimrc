@@ -70,7 +70,7 @@ nnoremap <C-L> :call g:ToggleNuMode()<cr>
 " nnoremap <C-L> :set nornu!<cr>
 
 set runtimepath^=~/.vim/bundle/ctrlp.vim
-set wildignore=*/tmp/*,*.so,*.class,*.swp,*.zip,*.pdf,*.o,*/target/*
+set wildignore=*/tmp/*,*.so,*.class,*.swp,*.zip,*.pdf,*.o,*/target/*,*/node_modules/*,*/bower_components/*
 let g:ctrlp_by_filename = 0
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_regexp = 1
