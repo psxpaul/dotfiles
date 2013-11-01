@@ -45,4 +45,9 @@ if [ ! -d ~/.bashrc.d ]; then
     touch ~/.bashrc.d/noop
 fi
 
+if [ ! -d ~/.profile.d ]; then
+    mkdir ~/.profile.d
+    touch ~/.profile.d/noop
+fi
+
 echo "Done!"
