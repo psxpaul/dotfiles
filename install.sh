@@ -35,4 +35,14 @@ echo "Creating symlink to meldGit in ~/bin"
 mkdir -p ~/bin
 ln -fs $dir/meldGit ~/bin/meldGit
 
+if [ ! -d ~/.bash_aliases.d ]; then
+    mkdir ~/.bash_aliases.d
+    touch ~/.bash_aliases.d/noop
+fi
+
+if [ ! -d ~/.bashrc.d ]; then
+    mkdir ~/.bashrc.d
+    touch ~/.bashrc.d/noop
+fi
+
 echo "Done!"
