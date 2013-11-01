@@ -1,8 +1,7 @@
 [core]
-    excludesfile = $HOME/.gitignore
+    excludesfile = ~/.gitignore
 [user]
     name = Paul Roberts
-    email = $GIT_EMAIL
 [diff]
     external = $HOME/bin/meldGit
     tool = gvimdiff
@@ -12,3 +11,5 @@
     pretty = format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
 [merge]
     tool = gvimdiff
+[include]
+    path = ~/.gitconfig_local
