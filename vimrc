@@ -1,87 +1,69 @@
-syntax enable
-set encoding=utf-8
-set nocompatible
-set nowrap
-set autochdir
-set number
-set incsearch
-set hlsearch
-map <F11> :set invpaste<CR>
-set tags=~/.tags
-set complete=.,w,b,u,t,i
-set wildmode=longest:full,list
-set wildmenu
-set backspace=indent,eol,start
+runtime bundle/vim-pathogen/autoload/pathogen.vim           " autoload all plugins in ~/.vim/bundle
+execute pathogen#infect()
+syntax on                                                   " turn on syntastic
 
-set ignorecase
-set smartcase
+let g:syntastic_check_on_open = 1                           " run syntastic when first opening a file
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
 
-" invisible characters				  asdfasfd
-set list
-set listchars=tab:▸\.,trail:-,extends:»,precedes:«
-" set listchars+=,eol:¬
+set encoding=utf-8                                          " file encoding
+set nocompatible                                            " probably not necessary
+set nowrap                                                  " don't wrap long lines around
+set autochdir                                               " change the working directory when opening a file
+set number                                                  " show line numbers
+
+set incsearch                                               " search-as-you-type
+set hlsearch                                                " highlight all matches
+set ignorecase                                              " case insensitive search by default
+set smartcase                                               " case sensitive if you have any caps in your query
+
+set wildmode=longest:full,list                              " tab completion
+set wildmenu                                                " tab completion
+set backspace=indent,eol,start                              " so you can backspace past where you started input mode
+
+set list                                                    " show invisible characters
+set listchars=tab:▸\.,trail:-,extends:»,precedes:«          " set what the invisible characters should look like
 highlight NonText guifg=#4a4a59
 highlight SpecialKey guifg=#4a4a59
 
-" indentation stuff
-set filetype=on
-filetype plugin on
-filetype indent on
-set ai
-set ts=4
-set sts=4
-set et
-set sw=4
+set filetype=on                                             " autodetect filetype
+filetype plugin on                                          " load plugins for specific filetypes
+filetype indent on                                          " load indentation settings for specific filetypes
+set autoindent                                              " use the indentation of previous line when starting a new line
+set expandtab                                               " when hitting <tab> key, insert spaces instead
+set tabstop=4                                               " how big a tab looks
+set softtabstop=4                                           " how many spaces to insert when hitting <tab> key
+set shiftwidth=4                                            " how many spaces to add/remove when >> or <<'ing
 
-" HTML (tab width 2 chr, no wrapping)
-autocmd FileType html set sw=2
-autocmd FileType html set ts=2
-autocmd FileType html set sts=2
-autocmd FileType html set textwidth=0
-" XHTML (tab width 2 chr, no wrapping)
-autocmd FileType xhtml set sw=2
-autocmd FileType xhtml set ts=2
-autocmd FileType xhtml set sts=2
-autocmd FileType xhtml set textwidth=0
-" CSS (tab width 2 chr, wrap at 79th char)
-autocmd FileType css set sw=2
-autocmd FileType css set ts=2
-autocmd FileType css set sts=2
+set wildignore+=*/tmp/*                                     " ctrlp - ignore files in tmp directories
+set wildignore+=*/target/*                                  " ctrlp - ignore files in target directories
+set wildignore+=*.so                                        " ctrlp - ignore .so files
+set wildignore+=*.o                                         " ctrlp - ignore .o files
+set wildignore+=*.class                                     " ctrlp - ignore .class files
+set wildignore+=*.swp                                       " ctrlp - ignore .swp files
+set wildignore+=*.zip                                       " ctrlp - ignore .zip files
+set wildignore+=*.pdf                                       " ctrlp - ignore .pdf files
+set wildignore+=*/node_modules/*                            " ctrlp - ignore node modules
+set wildignore+=*/bower_components/*                        " ctrlp - ignore bower components
 
-" autocomplete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-
-" turn off jslint for cli vim
-if !has('gui_running')
-    let g:JSLintHighlightErrorLine = 0
-endif
-
-" relative line numbers
-function! g:ToggleNuMode()
-    if(&rnu == 1)
-        set nu
-    else
-        set rnu
-    endif
-endfunc
-nnoremap <C-L> :call g:ToggleNuMode()<cr>
-" nnoremap <C-L> :set nornu!<cr>
-
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-set wildignore=*/tmp/*,*.so,*.class,*.swp,*.zip,*.pdf,*.o,*/target/*,*/node_modules/*,*/bower_components/*
-let g:ctrlp_by_filename = 0
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_regexp = 1
+let g:ctrlp_by_filename = 0                                 " ctrlp - don't search by filename by default (use full path instead)
+let g:ctrlp_show_hidden = 1                                 " ctrlp - search for hidden files
+let g:ctrlp_regexp = 1                                      " ctrlp - use regexp matching
 let g:ctrlp_root_markers = ['pom.xml', 'Config', 'Gruntfile.js', 'package.json']
 
+:color twilight                                             " choose the colorscheme
+set guifont=Monaco\ 10                                      " set the font if you're in gvim
+
+" begin colors for syntastic highlighting "
+"hi SpellBad ctermfg=009 ctermbg=019 guifg=#ffffff guibg=#ff0000
+"hi SpellCap ctermfg=002 ctermbg=019 guifg=#ffffff guibg=#ff0000
+" end colors for syntastic highlighting "
+
+" begin StatusLine "
 set laststatus=2
 set statusline=%F%m%r%h%w\ %=%<%1.30{getcwd()}\ [line\ %l\/%L\ \|\ col\ %v]
 
 hi StatusLine ctermfg=Black ctermbg=White guifg=Black guibg=White
 au InsertEnter * hi StatusLine ctermbg=DarkBlue guibg=DarkBlue
 au InsertLeave * hi StatusLine ctermfg=Black ctermbg=White guifg=Black guibg=White
-" hi Normal guibg=black guifg=white
-:color twilight
-set guifont=Monaco\ 10
+" end StatusLine "
