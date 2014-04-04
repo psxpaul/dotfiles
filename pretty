@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for f in $@; do
+    cat $f | python -mjson.tool > /tmp/pretty_file &&
+    rm $f &&
+    cp /tmp/pretty_file $f
+done

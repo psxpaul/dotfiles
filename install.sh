@@ -34,6 +34,7 @@ ln -fs $dir/.gitmodules ~/.gitmodules
 echo "Creating symlink to meldGit in ~/bin"
 mkdir -p ~/bin
 ln -fs $dir/meldGit ~/bin/meldGit
+ln -fs $dir/pretty ~/bin/pretty
 
 if [ ! -d ~/.bash_aliases.d ]; then
     mkdir ~/.bash_aliases.d
