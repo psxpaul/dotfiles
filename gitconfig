@@ -13,3 +13,5 @@
     tool = gvimdiff
 [include]
     path = ~/.gitconfig_local
+[push]
+	default = simple

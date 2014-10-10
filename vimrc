@@ -79,3 +79,10 @@ vnoremap <silent> # :<C-U>
   \gvy?<C-R><C-R>=substitute(
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
+
+" Show line numbers in netrw/directory browser/explorer
+let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
+
+" Ctrl-Shift-PageUp and Ctrl-Shift-PageDown should move tabs left/right
+noremap <C-S-PageUp> :tabm -1<CR>
+noremap <C-S-PageDown> :tabm +1<CR>
