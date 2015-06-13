@@ -58,6 +58,11 @@ do
     . $f;
 done
 
+for f in $HOME/.bash_completion.d_custom/*
+do
+    . $f;
+done
+
 for f in $HOME/.bashrc.d/*
 do
     . $f;
