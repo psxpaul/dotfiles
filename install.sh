@@ -6,59 +6,45 @@
 
 ########## Variables
 
-dir=~/dotfiles                    # dotfiles directory
-files="bashrc bash_aliases bash_completion.d profile inputrc gitconfig gvimrc vimrc vim"    # list of files/folders to symlink in homedir
+dir=$HOME/dotfiles                    # dotfiles directory
+files="bashrc bash_aliases profile inputrc gitconfig gvimrc vimrc vim"    # list of files/folders to symlink in homedir
+directories=".bash_aliases.d .bash_completion.d .bashrc.d .profile.d bin"
 
 ##########
 
 # change to the dotfiles directory
-echo -n "Changing to the $dir directory ..."
+echo "Changing to the $dir directory..."
 cd $dir
 
 # get the latest submodules
 git submodule init
 git submodule update
 
-# create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
-for file in $files; do
-    echo "Creating symlink to $file in home directory."
-    rm -f ~/.$file
-    ln -s $dir/$file ~/.$file
+# create directories as needed
+for directory in $directories; do
+    echo "Creating $HOME/$directory/noop"
+    mkdir -p $HOME/$directory
+    touch $HOME/$directory/noop
 done
 
-echo "Creating symlink to .gitignore in home directory."
-ln -fs $dir/.gitignore ~/.gitignore
-echo "Creating symlink to .gitmodules in home directory."
-ln -fs $dir/.gitmodules ~/.gitmodules
+# create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
+for file in $files; do
+    echo "Creating symlink to $file in home directory"
+    rm -f $HOME/.$file
+    ln -fs $dir/$file $HOME/.$file
+done
+
+for file in $dir/bash_completion.d/*; do
+    base=`basename $file`
+    echo "Creating symlink from $file to $HOME/.bash_completion.d/$base"
+    ln -fs $file $HOME/.bash_completion.d/$base
+done
+
+echo "Creating symlink to .gitignore in home directory"
+ln -fs $dir/.gitignore $HOME/.gitignore
 
 echo "Creating symlink to meldGit in ~/bin"
-mkdir -p ~/bin
-ln -fs $dir/meldGit ~/bin/meldGit
-ln -fs $dir/pretty ~/bin/pretty
-
-if [ ! -d ~/.bash_aliases.d ]; then
-    mkdir ~/.bash_aliases.d
-    touch ~/.bash_aliases.d/noop
-fi
-
-if [ ! -d ~/.bash_aliases.d_custom ]; then
-    mkdir ~/.bash_aliases.d_custom
-    touch ~/.bash_aliases.d_custom/noop
-fi
-
-if [ ! -d ~/.bash_completion.d_custom ]; then
-    mkdir ~/.bash_completion.d_custom
-    touch ~/.bash_completion.d_custom/noop
-fi
-
-if [ ! -d ~/.bashrc.d ]; then
-    mkdir ~/.bashrc.d
-    touch ~/.bashrc.d/noop
-fi
-
-if [ ! -d ~/.profile.d ]; then
-    mkdir ~/.profile.d
-    touch ~/.profile.d/noop
-fi
+ln -fs $dir/meldGit $HOME/bin/meldGit
+ln -fs $dir/pretty $HOME/bin/pretty
 
 echo "Done!"
