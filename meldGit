@@ -2,9 +2,19 @@
 
 MELD_PATH=/usr/bin/meld
 
+if [ -e /usr/local/bin/meld ]
+then
+    MELD_PATH=/usr/local/bin/meld
+fi
+
 if [ -e $HOME/bin/meld ]
 then
     MELD_PATH=$HOME/bin/meld
 fi
 
-$MELD_PATH $2 $5
+if [ -e /Applications/Meld.app/Contents/MacOS/Meld-bin ]
+then
+    MELD_PATH=/Applications/Meld.app/Contents/MacOS/Meld
+fi
+
+$MELD_PATH "$2" "$5"

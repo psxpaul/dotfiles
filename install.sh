@@ -46,6 +46,11 @@ if [ ! -d ~/.bash_aliases.d_custom ]; then
     touch ~/.bash_aliases.d_custom/noop
 fi
 
+if [ ! -d ~/.bash_completion.d_custom ]; then
+    mkdir ~/.bash_completion.d_custom
+    touch ~/.bash_completion.d_custom/noop
+fi
+
 if [ ! -d ~/.bashrc.d ]; then
     mkdir ~/.bashrc.d
     touch ~/.bashrc.d/noop

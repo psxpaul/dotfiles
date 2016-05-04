@@ -1,5 +1,5 @@
 [core]
-    excludesfile = ~/.gitignore
+    excludesfile = $HOME/.gitignore
 [user]
     name = Paul Roberts
     email = psxpaul@gmail.com
