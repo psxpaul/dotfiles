@@ -2,6 +2,7 @@
     excludesfile = ~/.gitignore
 [user]
     name = Paul Roberts
+    email = psxpaul@gmail.com
 [diff]
     external = $HOME/bin/meldGit
     tool = gvimdiff
@@ -14,4 +15,4 @@
 [include]
     path = ~/.gitconfig_local
 [push]
-	default = simple
+    default = simple
