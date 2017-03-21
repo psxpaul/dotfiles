@@ -9,3 +9,5 @@ for f in $HOME/.profile.d/*
 do
     . $f;
 done
+
+[[ -s ~/.bashrc ]] && source ~/.bashrc

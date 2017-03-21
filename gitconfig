@@ -2,7 +2,6 @@
     excludesfile = $HOME/.gitignore
 [user]
     name = Paul Roberts
-    email = psxpaul@gmail.com
 [diff]
     external = $HOME/bin/meldGit
     tool = gvimdiff

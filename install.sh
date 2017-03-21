@@ -7,7 +7,7 @@
 ########## Variables
 
 dir=$HOME/dotfiles                    # dotfiles directory
-files="bashrc bash_aliases profile inputrc gitconfig gvimrc vimrc vim"    # list of files/folders to symlink in homedir
+files="bashrc bash_aliases inputrc gitconfig gvimrc vimrc vim"    # list of files/folders to symlink in homedir
 directories=".bash_aliases.d .bash_completion.d .bashrc.d .profile.d bin"
 
 ##########
@@ -46,5 +46,12 @@ ln -fs $dir/.gitignore $HOME/.gitignore
 echo "Creating symlink to meldGit in ~/bin"
 ln -fs $dir/meldGit $HOME/bin/meldGit
 ln -fs $dir/pretty $HOME/bin/pretty
+
+echo "Creating symlink to .profile in home directory"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    ln -fs $dir/profile $HOME/.bash_profile
+elif
+    ln -fs $dir/profile $HOME/.profile
+fi
 
 echo "Done!"
