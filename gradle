@@ -1,0 +1,11 @@
+#!/bin/bash
+
+LOCAL_PATHS="${PWD}"
+dir="${PWD}"
+
+while [ ! -d "${dir}/.git" ]; do
+    dir=$(dirname "${dir}")
+    LOCAL_PATHS="${LOCAL_PATHS}:${dir}"
+done
+
+PATH="${LOCAL_PATHS}:${PATH}" gradlew "$@"
