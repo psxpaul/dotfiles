@@ -40,6 +40,12 @@ for file in $dir/bash_completion.d/*; do
     ln -fs $file $HOME/.bash_completion.d/$base
 done
 
+for file in $dir/bin/*; do
+    base=`basename $file`
+    echo "Creating symlink from $file to $HOME/bin/$base"
+    ln -fs $file $HOME/bin/$base
+done
+
 echo "Creating symlink to .profile in home directory"
 if [[ "$OSTYPE" == "darwin"* ]]; then
     ln -fs $dir/profile $HOME/.bash_profile
@@ -49,10 +55,5 @@ fi
 
 echo "Creating symlink to .gitignore in home directory"
 ln -fs $dir/.gitignore $HOME/.gitignore
-
-echo "Creating symlinks in ~/bin"
-ln -fs $dir/gradle $HOME/bin/gradle
-ln -fs $dir/meldGit $HOME/bin/meldGit
-ln -fs $dir/pretty $HOME/bin/pretty
 
 echo "Done!"
