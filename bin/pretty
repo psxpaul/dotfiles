@@ -1,11 +1,18 @@
 #!/bin/bash
 
 if [ "$#" -eq 0 ]; then
-    python -mjson.tool
-fi
+    data=$(cat)
+    echo $data | egrep -q "^<"
 
-for f in $@; do
-    cat $f | python -mjson.tool > /tmp/pretty_file &&
-    rm $f &&
-    cp /tmp/pretty_file $f
-done
+    if [ $? -eq 0 ]; then
+        echo $data | xmllint --format - | grep -v "^<?xml version=\".*\"?>"
+    else
+        echo $data | python3 -mjson.tool
+    fi
+else
+    for f in $@; do
+        cat $f | pretty > /tmp/pretty_file &&
+        rm $f &&
+        cp /tmp/pretty_file $f
+    done
+fi

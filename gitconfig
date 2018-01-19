@@ -3,15 +3,24 @@
 [user]
     name = Paul Roberts
 [diff]
-    external = $HOME/bin/meldGit
-    tool = gvimdiff
+    tool = meld
+[difftool]
+    prompt = false
+[difftool "meld"]
+    cmd = meld "$LOCAL" "$REMOTE"
 [color]
     ui = auto
 [format]
     pretty = format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
 [merge]
-    tool = gvimdiff
+    tool = meld
+[mergetool]
+    keepBackup = false
+[mergetool "meld"]
+    cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
 [include]
     path = ~/.gitconfig_local
 [push]
     default = simple
+[alias]
+    meld = !git difftool --dir-diff
