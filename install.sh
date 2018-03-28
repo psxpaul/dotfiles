@@ -1,12 +1,12 @@
 #!/bin/bash
 ############################
 # .make.sh
-# This script creates symlinks from the home directory to any desired dotfiles in ~/dotfiles
+# This script creates symlinks from the home directory to any desired dotfiles in the project repo
 ############################
 
 ########## Variables
 
-dir=$HOME/dotfiles                    # dotfiles directory
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"                    # dotfiles directory
 files="bashrc bash_aliases inputrc gitconfig gvimrc vimrc vim"    # list of files/folders to symlink in homedir
 directories=".bash_aliases.d .bash_completion.d .bashrc.d .profile.d bin"
 

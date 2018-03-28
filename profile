@@ -11,3 +11,4 @@ do
 done
 
 [[ -s ~/.bashrc ]] && source ~/.bashrc
+[[ -s /usr/local/etc/bash_completion ]] && source /usr/local/etc/bash_completion
