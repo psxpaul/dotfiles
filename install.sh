@@ -40,6 +40,25 @@ for file in $dir/bash_completion.d/*; do
     ln -fs $file $HOME/.bash_completion.d/$base
 done
 
+# setup bash-completion for docker for mac
+if [[ -d "/Applications/Docker.app/Contents/Resources/etc" ]]; then
+  for file in /Applications/Docker.app/Contents/Resources/etc/*.bash-completion; do
+      base=`basename $file`
+      echo "Creating symlink from $file to $HOME/.bash_completion.d/$base"
+      ln -fs $file $HOME/.bash_completion.d/$base
+  done
+fi
+
+# setup home/end keys for mac
+if [[ -d "$HOME/Library" ]]; then
+    echo "Creating OSX keybindings file"
+    mkdir -p $HOME/Library/KeyBindings
+    ln -fs $dir/DefaultKeyBinding.dict $HOME/Library/KeyBindings/DefaultKeyBinding.dict
+
+    echo "Setting up terminal Ctrl+PgUp and Ctrl+PgDown key bindings"
+    defaults write -g NSUserKeyEquivalents -dict-add "Show Previous Tab" "^\UF72C" "Previous Tab" "^\UF72C" "Previous Workspace" "^\UF72C" "Show Next Tab" "^\UF72D" "Next Tab" "^\UF72D" "Next Workspace" "^\UF72D"
+fi
+
 for file in $dir/bin/*; do
     base=`basename $file`
     echo "Creating symlink from $file to $HOME/bin/$base"

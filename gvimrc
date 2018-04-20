@@ -1,6 +1,6 @@
 set lines=40 columns=150
 
-vmap <C-j> !pretty<CR>
+vmap <C-j> !~/bin/pretty<CR>
 vmap <C-c> "+yi
 vmap <C-x> "+c
 vmap <C-v> c<ESC>"+p
