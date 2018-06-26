@@ -75,11 +75,9 @@ fi
 echo "Creating symlink to .gitignore in home directory"
 ln -fs $dir/.gitignore $HOME/.gitignore
 
-echo "Setting up neovim config"
-cat > $HOME/.config/nvim/init.vim <<- EOM
-set runtimepath+=~/.vim,~/.vim/after
-set packpath+=~/.vim
-source ~/.vimrc
-EOM
+echo "Setting up neovim/oni config"
+mkdir -p $HOME/.config
+ln -fs $dir/nvim $HOME/.config/nvim
+ln -fs $dir/oni $HOME/.config/oni
 
 echo "Done!"
