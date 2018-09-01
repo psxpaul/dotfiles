@@ -80,4 +80,12 @@ mkdir -p $HOME/.config
 ln -fs $dir/nvim $HOME/.config/nvim
 ln -fs $dir/oni $HOME/.config/oni
 
+pushd $PWD > /dev/null
+for pluginDir in $dir/oni/plugins/*; do
+    cd $pluginDir
+    echo "Runing 'npm install' from $pluginDir"
+    npm install
+done
+popd > /dev/null
+
 echo "Done!"

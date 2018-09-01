@@ -25,10 +25,11 @@ function! YamlFoldText()
   return getline(v:foldstart) . '   (level ' . v:foldlevel . ', lines ' . lines . ')'
 endfunction
 
-
 setlocal foldmethod=expr
 setlocal foldexpr=YamlFolds()
 setlocal foldtext=YamlFoldText()
+setlocal shiftwidth=2
+setlocal softtabstop=2
 
 let b:undo_ftplugin =
       \ exists('b:undo_ftplugin')
