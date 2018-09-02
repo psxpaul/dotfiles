@@ -79,10 +79,10 @@ Oni.DefaultFileOpenOptions.openMode = Oni.FileOpenMode.NewTab;
 function switchFolders(oni: Oni.Plugin.Api) {
     const homeDir = process.env.HOME;
     const sourceDirs = readdirSync(join(homeDir, "src")).filter(f => statSync(join(homeDir, "src", f)).isDirectory());
-    const workspaces = sourceDirs.map(d => ({label: d, detail: d, fullpath: join(homeDir, "src", d)}));
+    const workspaces = sourceDirs.map(d => ({label: d, detail: join(homeDir, "src", d)}));
     const menu = oni.menu.create();
     menu.show();
     menu.setItems(workspaces);
-    menu.onItemSelected.subscribe((selectedValue) => oni.workspace.changeDirectory(selectedValue.fullpath))
+    menu.onItemSelected.subscribe((selectedValue) => oni.workspace.changeDirectory(selectedValue.detail));
 
 }

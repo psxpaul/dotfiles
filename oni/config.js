@@ -66,9 +66,9 @@ Oni.DefaultFileOpenOptions.openMode = Oni.FileOpenMode.NewTab;
 function switchFolders(oni) {
     var homeDir = process.env.HOME;
     var sourceDirs = fs_1.readdirSync(path_1.join(homeDir, "src")).filter(function (f) { return fs_1.statSync(path_1.join(homeDir, "src", f)).isDirectory(); });
-    var workspaces = sourceDirs.map(function (d) { return ({ label: d, detail: d, fullpath: path_1.join(homeDir, "src", d) }); });
+    var workspaces = sourceDirs.map(function (d) { return ({ label: d, detail: path_1.join(homeDir, "src", d) }); });
     var menu = oni.menu.create();
     menu.show();
     menu.setItems(workspaces);
-    menu.onItemSelected.subscribe(function (selectedValue) { return oni.workspace.changeDirectory(selectedValue.fullpath); });
+    menu.onItemSelected.subscribe(function (selectedValue) { return oni.workspace.changeDirectory(selectedValue.detail); });
 }
