@@ -3,20 +3,22 @@ exports.__esModule = true;
 var Oni = require("oni-api");
 var os = require("os");
 var process = require("process");
+var fs_1 = require("fs");
+var path_1 = require("path");
 exports.activate = function (oni) {
     console.log("config activated");
     if (os.platform() === "darwin") {
         oni.input.unbind("<m-,>");
         oni.input.unbind("<m-t>");
         oni.input.bind("<m-s-n>", "oni.process.openWindow");
-        oni.input.bind("<m-s-o>", "workspace.openFolder");
+        oni.input.bind('<m-s-o>', function () { return switchFolders(oni); });
     }
     else {
         oni.input.unbind("<c-t>");
-        //oni.input.unbind("<c-s-n>");
-        //oni.input.unbind("<c-s-o>");
+        oni.input.unbind("<c-s-n>");
+        oni.input.unbind("<c-s-o>");
         oni.input.bind("<s-c-n>", "oni.process.openWindow");
-        oni.input.bind("<s-c-o>", "workspace.openFolder");
+        oni.input.bind('<s-c-o>', function () { return switchFolders(oni); });
     }
     // tab switching
     oni.input.unbind("<c-pageup>");
@@ -34,7 +36,7 @@ exports.deactivate = function (oni) {
     console.log("config deactivated");
 };
 exports.configuration = {
-    //"oni.hideMenu": true,
+    "oni.hideMenu": true,
     "experimental.markdownPreview.enabled": true,
     "experimental.indentLines.enabled": true,
     "sidebar.plugins.enabled": true,
@@ -61,3 +63,12 @@ Object.keys(exports.configuration).forEach(function (key) {
     }
 });
 Oni.DefaultFileOpenOptions.openMode = Oni.FileOpenMode.NewTab;
+function switchFolders(oni) {
+    var homeDir = process.env.HOME;
+    var sourceDirs = fs_1.readdirSync(path_1.join(homeDir, "src")).filter(function (f) { return fs_1.statSync(path_1.join(homeDir, "src", f)).isDirectory(); });
+    var workspaces = sourceDirs.map(function (d) { return ({ label: d, detail: d, fullpath: path_1.join(homeDir, "src", d) }); });
+    var menu = oni.menu.create();
+    menu.show();
+    menu.setItems(workspaces);
+    menu.onItemSelected.subscribe(function (selectedValue) { return oni.workspace.changeDirectory(selectedValue.fullpath); });
+}

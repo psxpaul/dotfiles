@@ -1,6 +1,8 @@
 import * as Oni from "oni-api"
 import * as os from "os"
 import * as process from "process"
+import { readdirSync, statSync} from "fs"
+import { join } from "path"
 
 export const activate = (oni: Oni.Plugin.Api) => {
     console.log("config activated");
@@ -10,13 +12,13 @@ export const activate = (oni: Oni.Plugin.Api) => {
 
         oni.input.unbind("<m-t>");
         oni.input.bind("<m-s-n>", "oni.process.openWindow")
-        oni.input.bind("<m-s-o>", "workspace.openFolder")
+        oni.input.bind('<m-s-o>', () => switchFolders(oni))
     } else {
         oni.input.unbind("<c-t>");
         oni.input.unbind("<c-s-n>");
         oni.input.unbind("<c-s-o>");
-        oni.input.bind("<c-s-n>", "oni.process.openWindow")
-        oni.input.bind("<c-s-o>", "workspace.openFolder")
+        oni.input.bind("<s-c-n>", "oni.process.openWindow")
+        oni.input.bind('<s-c-o>', () => switchFolders(oni))
     }
 
     // tab switching
@@ -64,8 +66,8 @@ export const configuration = {
 }
 
 Object.keys(configuration).forEach((key) => {
-    let homeDir = process.env.HOME;
-    let val = configuration[key];
+    const homeDir = process.env.HOME;
+    const val = configuration[key];
     if (typeof val === "string") {
         let valStr:String = val;
         configuration[key] = valStr.replace(/^\$HOME/, homeDir);
@@ -73,3 +75,14 @@ Object.keys(configuration).forEach((key) => {
 })
 
 Oni.DefaultFileOpenOptions.openMode = Oni.FileOpenMode.NewTab;
+
+function switchFolders(oni: Oni.Plugin.Api) {
+    const homeDir = process.env.HOME;
+    const sourceDirs = readdirSync(join(homeDir, "src")).filter(f => statSync(join(homeDir, "src", f)).isDirectory());
+    const workspaces = sourceDirs.map(d => ({label: d, detail: d, fullpath: join(homeDir, "src", d)}));
+    const menu = oni.menu.create();
+    menu.show();
+    menu.setItems(workspaces);
+    menu.onItemSelected.subscribe((selectedValue) => oni.workspace.changeDirectory(selectedValue.fullpath))
+
+}
