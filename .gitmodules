@@ -10,6 +10,3 @@
 [submodule "gradle-completion"]
 	path = gradle-completion
 	url = https://github.com/gradle/gradle-completion.git
-[submodule "oni/plugins/oni-plugin-tslint"]
-	path = oni/plugins/oni-plugin-tslint
-	url = git@github.com:bryphe/oni-plugin-tslint.git

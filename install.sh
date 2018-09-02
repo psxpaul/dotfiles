@@ -77,8 +77,14 @@ ln -fs $dir/.gitignore $HOME/.gitignore
 
 echo "Setting up neovim/oni config"
 mkdir -p $HOME/.config
-ln -fs $dir/nvim $HOME/.config/nvim
-ln -fs $dir/oni $HOME/.config/oni
+
+if [[ ! -e $HOME/.config/nvim ]]; then
+    ln -fs $dir/nvim $HOME/.config/nvim
+fi
+
+if [[ ! -e $HOME/.config/oni ]]; then
+    ln -fs $dir/oni $HOME/.config/oni
+fi
 
 pushd $PWD > /dev/null
 for pluginDir in $dir/oni/plugins/*; do

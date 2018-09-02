@@ -13,8 +13,10 @@ exports.activate = function (oni) {
     }
     else {
         oni.input.unbind("<c-t>");
-        oni.input.bind("<c-s-n>", "oni.process.openWindow");
-        oni.input.bind("<c-s-o>", "workspace.openFolder");
+        //oni.input.unbind("<c-s-n>");
+        //oni.input.unbind("<c-s-o>");
+        oni.input.bind("<s-c-n>", "oni.process.openWindow");
+        oni.input.bind("<s-c-o>", "workspace.openFolder");
     }
     // tab switching
     oni.input.unbind("<c-pageup>");
@@ -32,7 +34,7 @@ exports.deactivate = function (oni) {
     console.log("config deactivated");
 };
 exports.configuration = {
-    "oni.hideMenu": true,
+    //"oni.hideMenu": true,
     "experimental.markdownPreview.enabled": true,
     "experimental.indentLines.enabled": true,
     "sidebar.plugins.enabled": true,

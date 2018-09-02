@@ -13,6 +13,8 @@ export const activate = (oni: Oni.Plugin.Api) => {
         oni.input.bind("<m-s-o>", "workspace.openFolder")
     } else {
         oni.input.unbind("<c-t>");
+        oni.input.unbind("<c-s-n>");
+        oni.input.unbind("<c-s-o>");
         oni.input.bind("<c-s-n>", "oni.process.openWindow")
         oni.input.bind("<c-s-o>", "workspace.openFolder")
     }
@@ -30,7 +32,6 @@ export const activate = (oni: Oni.Plugin.Api) => {
     oni.input.unbind("<c-f12>");
     oni.input.unbind("<s-f12>");
     oni.input.bind("<s-f12>", "language.findAllReferences")
-
 }
 
 export const deactivate = (oni: Oni.Plugin.Api) => {
