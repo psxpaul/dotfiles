@@ -45,6 +45,7 @@ export const configuration = {
     "experimental.markdownPreview.enabled": true,
     "experimental.indentLines.enabled": true,
 
+    "sidebar.marks.enabled": true,
     "sidebar.plugins.enabled": true,
 
     // this doesn't appear to work

@@ -1,9 +1,12 @@
-tsconfig.json
+Cache/
+Cookies
+Cookies-journal
 GPUCache/
+Local\ Storage/
 Preferences
-Settings
 sessions/
+Settings
 SingletonCookie
 SingletonLock
 SS
-Local\ Storage/
+tsconfig.json

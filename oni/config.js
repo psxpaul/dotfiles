@@ -39,6 +39,7 @@ exports.configuration = {
     "oni.hideMenu": true,
     "experimental.markdownPreview.enabled": true,
     "experimental.indentLines.enabled": true,
+    "sidebar.marks.enabled": true,
     "sidebar.plugins.enabled": true,
     // this doesn't appear to work
     // "language.html.textMateGrammar": "$HOME/.config/oni/html.tmLanguage.json",
