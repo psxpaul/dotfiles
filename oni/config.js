@@ -11,14 +11,14 @@ exports.activate = function (oni) {
         oni.input.unbind("<m-,>");
         oni.input.unbind("<m-t>");
         oni.input.bind("<m-s-n>", "oni.process.openWindow");
-        oni.input.bind('<m-s-o>', function () { return switchFolders(oni); });
+        oni.input.bind("<m-s-o>", function () { return switchFolders(oni); });
     }
     else {
         oni.input.unbind("<c-t>");
         oni.input.unbind("<c-s-n>");
         oni.input.unbind("<c-s-o>");
         oni.input.bind("<s-c-n>", "oni.process.openWindow");
-        oni.input.bind('<s-c-o>', function () { return switchFolders(oni); });
+        oni.input.bind("<s-c-o>", function () { return switchFolders(oni); });
     }
     // tab switching
     oni.input.unbind("<c-pageup>");
@@ -31,6 +31,10 @@ exports.activate = function (oni) {
     oni.input.unbind("<c-f12>");
     oni.input.unbind("<s-f12>");
     oni.input.bind("<s-f12>", "language.findAllReferences");
+    // tslint autofix
+    oni.input.bind("<s-c-l>", "tslint.fix.file");
+    // developer tools
+    oni.input.bind("<s-c-i>", "oni.debug.openDevTools");
 };
 exports.deactivate = function (oni) {
     console.log("config deactivated");

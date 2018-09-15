@@ -1,8 +1,8 @@
-import * as Oni from "oni-api"
-import * as os from "os"
-import * as process from "process"
-import { readdirSync, statSync} from "fs"
-import { join } from "path"
+import * as Oni from "oni-api";
+import * as os from "os";
+import * as process from "process";
+import { readdirSync, statSync} from "fs";
+import { join } from "path";
 
 export const activate = (oni: Oni.Plugin.Api) => {
     console.log("config activated");
@@ -11,14 +11,14 @@ export const activate = (oni: Oni.Plugin.Api) => {
         oni.input.unbind("<m-,>");
 
         oni.input.unbind("<m-t>");
-        oni.input.bind("<m-s-n>", "oni.process.openWindow")
-        oni.input.bind('<m-s-o>', () => switchFolders(oni))
+        oni.input.bind("<m-s-n>", "oni.process.openWindow");
+        oni.input.bind("<m-s-o>", () => switchFolders(oni));
     } else {
         oni.input.unbind("<c-t>");
         oni.input.unbind("<c-s-n>");
         oni.input.unbind("<c-s-o>");
-        oni.input.bind("<s-c-n>", "oni.process.openWindow")
-        oni.input.bind('<s-c-o>', () => switchFolders(oni))
+        oni.input.bind("<s-c-n>", "oni.process.openWindow");
+        oni.input.bind("<s-c-o>", () => switchFolders(oni));
     }
 
     // tab switching
@@ -27,13 +27,19 @@ export const activate = (oni: Oni.Plugin.Api) => {
 
     // jump to previous/next error
     oni.input.unbind("<c-,>");
-    oni.input.bind("<c-,>", "oni.editor.previousError")
-    oni.input.bind("<c-.>", "oni.editor.nextError")
+    oni.input.bind("<c-,>", "oni.editor.previousError");
+    oni.input.bind("<c-.>", "oni.editor.nextError");
 
     // find references
     oni.input.unbind("<c-f12>");
     oni.input.unbind("<s-f12>");
-    oni.input.bind("<s-f12>", "language.findAllReferences")
+    oni.input.bind("<s-f12>", "language.findAllReferences");
+
+    // tslint autofix
+    oni.input.bind("<s-c-l>", "tslint.fix.file");
+
+    // developer tools
+    oni.input.bind("<s-c-i>", "oni.debug.openDevTools");
 }
 
 export const deactivate = (oni: Oni.Plugin.Api) => {
