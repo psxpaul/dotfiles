@@ -2,9 +2,11 @@
 if has('macunix')
     map <M-w> :tabclose<CR>
     map <M-t> :tabnew<CR>
+    vmap <M-j> !~/bin/pretty<CR>
 else
     map <C-w> :tabclose<CR>
     map <C-t> :tabnew<CR>
+    vmap <C-j> !~/bin/pretty<CR>
 endif
 
 " Ctrl-Shift-PageUp and Ctrl-Shift-PageDown should move tabs left/right
