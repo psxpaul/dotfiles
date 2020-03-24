@@ -1,18 +1,60 @@
-#!/bin/bash
+#!/usr/bin/env python3
+import argparse
+import base64
+import fileinput
+import json
+import os
+import re
+import sys
+import xml.dom.minidom
 
-if [ "$#" -eq 0 ]; then
-    data=$(cat)
-    echo $data | egrep -q "^<"
+def prettyJson(input: str) -> str:
+    parsed = json.loads(input)
+    return json.dumps(parsed, sort_keys = True, indent = 4)
 
-    if [ $? -eq 0 ]; then
-        echo $data | xmllint --format - | grep -v "^<?xml version=\".*\"?>"
-    else
-        echo $data | python -mjson.tool
-    fi
-else
-    for f in $@; do
-        cat $f | pretty > /tmp/pretty_file &&
-        rm $f &&
-        cp /tmp/pretty_file $f
-    done
-fi
+def prettyXml(input: str) -> str:
+    parsed = xml.dom.minidom.parseString(input)
+    pretty = parsed.toprettyxml()
+    pretty = os.linesep.join([s for s in pretty.splitlines() if s.strip()]) # remove the weird newline issue
+    return re.sub(r'^<\?xml version=".*" \?>\n', '', pretty)
+
+def prettyBase64(input: str) -> str:
+    while len(input) % 4 != 0:
+        input += '='
+    return base64.b64decode(input).decode('ascii')
+
+def pretty(input: str) -> str:
+    if re.match(r'^<', input):
+        return prettyXml(input)
+
+    elif re.match(r'^Basic ', input):
+        return prettyBase64(re.sub(r'^Basic ', '', input))
+
+    elif re.match(r'^Bearer ', input):
+        parts = re.sub(r'^Bearer ', '', input).split('.', 3)
+        header = prettyBase64(parts[0])
+        body = prettyBase64(parts[1])
+        return prettyJson(body)
+
+    elif re.match(r'^{', input) or re.match(r'^\[', input):
+        return prettyJson(input)
+
+    elif re.match(r'^[A-Za-z0-9]*$', input):
+        return prettyBase64(input)
+
+    else:
+        raise Exception('Unable to detect type of data: ' + input)
+
+prog = 'pretty'
+description = ('A simple command line tool to pretty-print json or xml, decode Basic or Bearer auth tokens, or decode base64 text ')
+parser = argparse.ArgumentParser(prog=prog, description=description)
+parser.add_argument('infile', nargs='?', type=argparse.FileType(encoding="utf-8"), help='a file to be validated or pretty-printed', default=sys.stdin)
+
+options = parser.parse_args()
+with options.infile as infile:
+    try:
+        input = infile.read()
+        result = pretty(input)
+        print(result)
+    except ValueError as e:
+        raise SystemExit(e)
