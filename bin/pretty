@@ -19,6 +19,7 @@ def prettyXml(input: str) -> str:
     return re.sub(r'^<\?xml version=".*" \?>\n', '', pretty)
 
 def prettyBase64(input: str) -> str:
+    input = input.strip()
     while len(input) % 4 != 0:
         input += '='
     return base64.b64decode(input).decode('ascii')
@@ -30,17 +31,18 @@ def pretty(input: str) -> str:
     elif re.match(r'^Basic ', input):
         return prettyBase64(re.sub(r'^Basic ', '', input))
 
-    elif re.match(r'^Bearer ', input):
+    elif re.match(r'^Bearer ', input) or re.match(r'^[A-Za-z0-9]+\.[A-Za-z0-9]+.[-_A-Za-z0-9]+$', input):
         parts = re.sub(r'^Bearer ', '', input).split('.', 3)
         header = prettyBase64(parts[0])
         body = prettyBase64(parts[1])
         return prettyJson(body)
 
+    elif re.match(r'^[A-Za-z0-9]*={0,2}$', input):
+        return prettyBase64(input)
+
+
     elif re.match(r'^{', input) or re.match(r'^\[', input):
         return prettyJson(input)
-
-    elif re.match(r'^[A-Za-z0-9]*$', input):
-        return prettyBase64(input)
 
     else:
         raise Exception('Unable to detect type of data: ' + input)
