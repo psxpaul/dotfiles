@@ -8,4 +8,24 @@ while [[ ! -d "${dir}/.git" && "${dir}" != "/" ]]; do
     LOCAL_PATHS="${LOCAL_PATHS}:${dir}"
 done
 
-PATH="${LOCAL_PATHS}:${PATH}" mvnw "$@"
+# remove the current script from the PATH
+THIS_PATH=$(dirname $0)
+MAIN_PATH=:$PATH:
+MAIN_PATH=${MAIN_PATH//:$THIS_PATH:/:}
+MAIN_PATH=${MAIN_PATH#:}
+MAIN_PATH=${MAIN_PATH%:}
+
+MVN=$(PATH="${MAIN_PATH}" which mvn)
+MVNW=$(PATH="${LOCAL_PATHS}:${PATH}" which mvnw)
+
+if [[ ${MVNW} ]]; then
+    echo "Using maven wrapper: ${MVNW}"
+    $MVNW "$@"
+elif [[ ${MVN} ]]; then
+    echo "Using maven installation: ${MVN}"
+    $MVN "$@"
+else
+    echo "Could not find a maven installation"
+    exit -1
+fi
+
