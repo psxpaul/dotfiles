@@ -70,6 +70,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     ln -fs $dir/profile $HOME/.bash_profile
 else
     ln -fs $dir/profile $HOME/.profile
+    rm -f $HOME/.bash_profile
 fi
 
 echo "Creating symlink to .gitignore in home directory"

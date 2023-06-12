@@ -10,5 +10,9 @@ do
     . $f;
 done
 
+if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+    export MOZ_ENABLE_WAYLAND=1
+fi
+
 [[ -s ~/.bashrc ]] && source ~/.bashrc
 [[ -s /usr/local/etc/bash_completion ]] && source /usr/local/etc/bash_completion
