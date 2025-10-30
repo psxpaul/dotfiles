@@ -7,7 +7,7 @@
 [difftool]
     prompt = false
 [difftool "meld"]
-    cmd = meld "$LOCAL" "$REMOTE"
+    cmd = meldGit "$LOCAL" "$REMOTE"
 [color]
     ui = auto
 [format]
@@ -17,10 +17,15 @@
 [mergetool]
     keepBackup = false
 [mergetool "meld"]
-    cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+    cmd = meldGit "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
 [include]
     path = ~/.gitconfig_local
 [push]
     default = simple
 [alias]
     meld = !git difftool --dir-diff
+[init]
+    defaultBranch = main
+[fetch]
+    prune = true
+    pruneTags = true

@@ -66,12 +66,8 @@ for file in $dir/bin/*; do
 done
 
 echo "Creating symlink to .profile in home directory"
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    ln -fs $dir/profile $HOME/.bash_profile
-else
-    ln -fs $dir/profile $HOME/.profile
-    rm -f $HOME/.bash_profile
-fi
+rm -f $HOME/.bash_profile
+ln -fs $dir/profile $HOME/.profile
 
 echo "Creating symlink to .gitignore in home directory"
 ln -fs $dir/.gitignore $HOME/.gitignore

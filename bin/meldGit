@@ -12,9 +12,9 @@ then
     MELD_PATH=$HOME/bin/meld
 fi
 
-if [ -e /Applications/Meld.app/Contents/MacOS/Meld-bin ]
+if [ -e /Applications/Meld.app/Contents/MacOS/Meld ]
 then
     MELD_PATH=/Applications/Meld.app/Contents/MacOS/Meld
 fi
 
-$MELD_PATH "$2" "$5"
+$MELD_PATH $@
