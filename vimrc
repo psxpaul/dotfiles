@@ -35,26 +35,8 @@ set tabstop=4                                               " how big a tab look
 set softtabstop=4                                           " how many spaces to insert when hitting <tab> key
 set shiftwidth=4                                            " how many spaces to add/remove when >> or <<'ing
 
-set wildignore+=*/tmp/*                                     " ctrlp - ignore files in tmp directories
-set wildignore+=*/target/*                                  " ctrlp - ignore files in target directories
-set wildignore+=*/build/*                                   " ctrlp - ignore gradle build directories
-set wildignore+=*.so                                        " ctrlp - ignore .so files
-set wildignore+=*.o                                         " ctrlp - ignore .o files
-set wildignore+=*.class                                     " ctrlp - ignore .class files
-set wildignore+=*.swp                                       " ctrlp - ignore .swp files
-set wildignore+=*.zip                                       " ctrlp - ignore .zip files
-set wildignore+=*.pdf                                       " ctrlp - ignore .pdf files
-set wildignore+=*/node_modules/*                            " ctrlp - ignore node modules
-set wildignore+=*/bower_components/*                        " ctrlp - ignore bower components
-set wildignore+=*/dist/*                                    " ctrlp - ignore grunt build directory
-
-let g:ctrlp_by_filename = 0                                 " ctrlp - don't search by filename by default (use full path instead)
-let g:ctrlp_show_hidden = 1                                 " ctrlp - search for hidden files
-let g:ctrlp_regexp = 1                                      " ctrlp - use regexp matching
-let g:ctrlp_root_markers = ['pom.xml', 'Config', 'Gruntfile.js', 'package.json', 'build.gradle', '.bashrc']
-
 :color twilight                                             " choose the colorscheme
-set guifont=Monaco\ 10                                      " set the font if you're in gvim
+set guifont=JetBrains\ Mono\ Medium\ 11                                      " set the font if you're in gvim
 
 " begin colors for syntastic highlighting "
 "hi SpellBad ctermfg=009 ctermbg=019 guifg=#ffffff guibg=#ff0000
